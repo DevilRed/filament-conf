@@ -26,4 +26,21 @@ class VenueForm
                 ->options(Region::class),// read enum cases
             ]);
     }
+
+    public static function getForm(): array
+    {
+        return [
+            TextInput::make('name')
+                ->required(),
+            TextInput::make('city')
+                ->required(),
+            TextInput::make('country')
+                ->required(),
+            TextInput::make('postal_code')
+                ->required(),
+            Select::make('region')
+                ->enum(Region::class)// to validate only enum vals are allowed
+                ->options(Region::class),
+        ];
+    }
 }

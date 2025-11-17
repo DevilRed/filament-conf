@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Conferences\Schemas;
 
 use App\Enums\Region;
+use App\Filament\Resources\Venues\Schemas\VenueForm;
 use Filament\Schemas\Components\Utilities\Get;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\Checkbox;
@@ -49,6 +50,8 @@ class ConferenceForm
                 Select::make('venue_id')
                     ->searchable()// search box
                     ->preload()// list values
+                    ->createOptionForm(VenueForm::getForm())// show + icon to add a venue
+                    ->editOptionForm(VenueForm::getForm())
                     ->relationship('venue', 'name', function (Builder $query, Get $get) {
                         return $query->where('region', $get('region'));
                     })
