@@ -47,9 +47,11 @@ class ConferenceForm
                     ->enum(Region::class)// to validate only enum vals are allowed
                     ->options(Region::class),
                 Select::make('venue_id')
-                ->relationship('venue', 'name', function (Builder $query, Get $get) {
-                    return $query->where('region',  $get('region'));
-                })
+                    ->searchable()// search box
+                    ->preload()// list values
+                    ->relationship('venue', 'name', function (Builder $query, Get $get) {
+                        return $query->where('region', $get('region'));
+                    })
                     ->default(null),
             ]);
     }
