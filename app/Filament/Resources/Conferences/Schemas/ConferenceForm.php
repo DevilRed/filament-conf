@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Conferences\Schemas;
 
+use App\Enums\Region;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
@@ -38,8 +39,9 @@ class ConferenceForm
                         'published' => 'Published',
                         'archived' => 'Archived',
                     ]),
-                TextInput::make('region')
-                    ->required(),
+                Select::make('region')
+                    ->enum(Region::class)// to validate only enum vals are allowed
+                    ->options(Region::class),
                 Select::make('venue_id')
                     ->relationship('venue', 'name')
                     ->default(null),
