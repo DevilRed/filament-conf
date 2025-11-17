@@ -3,6 +3,8 @@
 namespace App\Filament\Resources\Conferences\Schemas;
 
 use App\Enums\Region;
+use Filament\Schemas\Components\Utilities\Get;
+use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
@@ -40,10 +42,14 @@ class ConferenceForm
                         'archived' => 'Archived',
                     ]),
                 Select::make('region')
+                    // dependent select with livewire
+                    ->live()// make a request to the server to refresh section
                     ->enum(Region::class)// to validate only enum vals are allowed
                     ->options(Region::class),
                 Select::make('venue_id')
-                    ->relationship('venue', 'name')
+                ->relationship('venue', 'name', function (Builder $query, Get $get) {
+                    return $query->where('region',  $get('region'));
+                })
                     ->default(null),
             ]);
     }
