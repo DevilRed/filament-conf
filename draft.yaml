@@ -15,7 +15,7 @@ models:
     name: string
     city: string
     country: string
-    postal: string
+    postal_code: string
     relationships:
       hasMany: Conference
 
