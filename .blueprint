@@ -3,19 +3,19 @@ created:
     - database/factories/VenueFactory.php
     - database/factories/SpeakerFactory.php
     - database/factories/TalkFactory.php
-    - database/migrations/2025_11_17_131100_create_conferences_table.php
-    - database/migrations/2025_11_17_131101_create_venues_table.php
-    - database/migrations/2025_11_17_131102_create_speakers_table.php
-    - database/migrations/2025_11_17_131103_create_talks_table.php
-    - database/migrations/2025_11_17_131104_create_conference_speaker_table.php
-    - database/migrations/2025_11_17_131105_create_conference_talk_table.php
+    - database/migrations/2025_11_17_132617_create_conferences_table.php
+    - database/migrations/2025_11_17_132618_create_venues_table.php
+    - database/migrations/2025_11_17_132619_create_speakers_table.php
+    - database/migrations/2025_11_17_132620_create_talks_table.php
+    - database/migrations/2025_11_17_132621_create_conference_speaker_table.php
+    - database/migrations/2025_11_17_132622_create_conference_talk_table.php
     - app/Models/Conference.php
     - app/Models/Venue.php
     - app/Models/Speaker.php
     - app/Models/Talk.php
 models:
-    User: { name: string, email: string, email_verified_at: 'datetime nullable', password: string, remember_token: 'string nullable' }
+    User: { name: string, email: string, email_verified_at: 'timestamp nullable default:NULL', password: string, remember_token: 'string:100 nullable default:NULL' }
     Conference: { name: string, description: string, start_date: datetime, end_date: datetime, status: string, region: string, venue_id: 'unsignedInteger nullable', relationships: { belongsTo: Venue, belongsToMany: 'Speaker, Talk' } }
     Venue: { name: string, city: string, country: string, postal: string, relationships: { hasMany: Conference } }
     Speaker: { name: string, email: string, bio: text, twitter_handle: string, relationships: { belongsToMany: Conference } }
-    Talk: { title: string, abstract: text, relationships: { belongsTo: Speaker, belongsToMany: Conference } }
+    Talk: { title: string, abstract: text, speaker_id: unsignedInteger, relationships: { belongsTo: Speaker, belongsToMany: Conference } }
